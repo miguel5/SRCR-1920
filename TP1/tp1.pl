@@ -4,6 +4,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % SICStus PROLOG: Declaracoes iniciais
 
+:- use_module(library(system)).
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
 :- set_prolog_flag( unknown,fail ).
@@ -35,8 +36,9 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicante/2
 
-+adjudicante(IdAd,N,NIF,M) :: ( solucoes( IdAd,
-                                        adjudicante(IdAd,_,_,_),
++adjudicante(IdAd,N,NIF,M) :: ( solucoes( (IdAd, NIF),
+                                        (adjudicante(IdAd,_,_,_),
+                                        adjudicante(_,_,NIF,_)),
                                         S ),
                                     comprimento(S,C),
                                     C == 1).
@@ -44,8 +46,9 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicataria/2
 
-+adjudicataria(IdAda,N,NIF,M) :: ( solucoes( IdAda,
-                                            adjudicataria(IdAda,_,_,_),
++adjudicataria(IdAda,N,NIF,M) :: ( solucoes( (IdAda,NIF),
+                                            (adjudicataria(IdAda,_,_,_),
+                                            adjudicataria(_,_,NIF,_)),
                                             S ),
                                     comprimento(S,C),
                                     C == 1).
@@ -84,7 +87,7 @@
 +contrato(IdAd,IdAda,TC,TP,D,V,P,L,Data) :: ( solucoes( V,
                                                         contrato(IdAd,IdAda,TC,'ajuste direto',D,V,P,L,Data),
                                                         S ),
-                                              V =< 5000 ).
+                                              V =< 5000, V >= 0 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante Estrutural: nao permitir a insercao de contratos com tipo de procedimento ajuste direto e tipos de contrato inválidos
@@ -101,7 +104,6 @@
 %                                                       contrato(IdAd,IdAda,TC,'ajuste direto',D,V,P,L,Data),
 %                                                       S ) ).
                                             
-                                                
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do meta-predicado nao: Questao -> {V,F}
 
@@ -170,6 +172,11 @@ get_date_time_value(Key, Value) :-
     stamp_date_time(Stamp, DateTime, local),
     date_time_value(Key, DateTime, Value).
 
-%valida_data(DATA) :- get_date_time_value(day,D), get_date_time_value(month,M), get_date_time_value(year,Y), 
+%valida_data(DATA) :- datime(TIMESTAMP,DATA) 
 
-%getDay() :- 
+getParte(_,[],'false').
+getParte(1,[H|T],H).
+getParte(X,[H|T],R) :- X1 is X - 1, getParte(X1,T,R).
+
+%split_string(DATA,'/',L)
+%06/04/2020
