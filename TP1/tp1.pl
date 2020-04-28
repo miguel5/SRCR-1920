@@ -36,7 +36,12 @@
 
 adjudicante(1,'ze do pipo',123456789,'Vila').
 adjudicataria(1,'quim barreiros',987654321,'Vila').
-%evolucao(contrato(1,1,1,'contrato de aquisicao','ajuste direto','descricao',150,300,'Amares',26,6,2020)).
+contrato(1,1,1,'tipoContrato','tipoProcedimento','descricao',50000,300,'Amares',26,6,2020).
+contrato(2,1,1,'tipoContrato','tipoProcedimento','descricao',10000,300,'Amares',26,6,2018).
+contrato(3,1,1,'tipoContrato','tipoProcedimento','descricao',10000,300,'Amares',26,6,2019).
+contrato(4,1,1,'tipoContrato','tipoProcedimento','descricao',4000000,300,'Amares',26,6,2016).
+contrato(5,1,1,'tipoContrato','tipoProcedimento','descricao',5000,300,'Amares',26,6,2018).
+%evolucao(contrato(6,1,1,'tipoContrato','tipoProcedimento','descricao',150,300,'Amares',26,6,2020)).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicante/2
@@ -61,76 +66,76 @@ adjudicataria(1,'quim barreiros',987654321,'Vila').
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: Id Contrato já existe
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
-                                                                   contrato(IdC,_,_,_,_,_,_,_,_,_,_,_),
-                                                                   S ),
-                                                         comprimento(S,N),
-                                                         N == 1 ).
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
+%                                                                   contrato(IdC,_,_,_,_,_,_,_,_,_,_,_),
+%                                                                   S ),
+%                                                         comprimento(S,N),
+%                                                         N == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: Adjudicante já existe
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdAd,
-                                                                   adjudicante(IdAd,_,_,_),
-                                                                   S ),
-                                                         comprimento(S,N),
-                                                         N == 1 ).
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdAd,
+%                                                                   adjudicante(IdAd,_,_,_),
+%                                                                   S ),
+%                                                         comprimento(S,N),
+%                                                         N == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: Adjudicataria já existe
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdAda,
-                                                                   adjudicataria(IdAda,_,_,_),
-                                                                   S ),
-                                                         comprimento(S,N),
-                                                         N == 1 ).
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdAda,
+%                                                                   adjudicataria(IdAda,_,_,_),
+%                                                                   S ),
+%                                                         comprimento(S,N),
+%                                                         N == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Estrutural: nao permitir a insercao de tipos de procedimento inválidos
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( TP,
-                                                                   contrato(_,_,_,_,TP,_,_,_,_,_,_,_),
-                                                                   S ),
-                                                         pertence( TP,['ajuste direto', 'consulta previa', 'concurso publico']) ).
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( TP,
+%                                                                   contrato(_,_,_,_,TP,_,_,_,_,_,_,_),
+%                                                                   S ),
+%                                                         pertence( TP,['ajuste direto', 'consulta previa', 'concurso publico']) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Estrutural: nao permitir a insercao de contratos com tipo de procedimento ajuste direto e valor =< a 5000€
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( V,
-                                                                   contrato(_,_,_,_,'ajuste direto',_,V,_,_,_,_,_),
-                                                                   S ),
-                                                         V =< 5000, V >= 0 ).
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( V,
+%                                                                   contrato(_,_,_,_,'ajuste direto',_,V,_,_,_,_,_),
+%                                                                   S ),
+%                                                         V =< 5000, V >= 0 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Estrutural: nao permitir a insercao de contratos com tipo de procedimento ajuste direto e tipos de contrato inválidos
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( TC,
-                                                                   contrato(_,_,_,TC,'ajuste direto',_,_,_,_,_,_,_),
-                                                                   S ),
-                                                         pertence( TC,['contrato de aquisicao', 'locacao de bens moveis', 'aquisicao de servicos']) ).
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( TC,
+%                                                                   contrato(_,_,_,TC,'ajuste direto',_,_,_,_,_,_,_),
+%                                                                   S ),
+%                                                         pertence( TC,['contrato de aquisicao', 'locacao de bens moveis', 'aquisicao de servicos']) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Estrutural: nao permitir a insercao de contratos com tipo de procedimento ajuste direto e prazo de vigência superior a 1 ano
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( P,
-                                                                   contrato(_,_,_,_,'ajuste direto',_,_,P,_,_,_,_),
-                                                                   S ),
-                                                         P =< 365 ). 
+%+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( P,
+%                                                                   contrato(_,_,_,_,'ajuste direto',_,_,P,_,_,_,_),
+%                                                                   S ),
+%                                                         P =< 365 ). 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Estrutural: 
 
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: Ano1 is Ano - 1, 
-                                                       Ano2 is Ano - 2, 
-                                                       find(IdAd,IdAda,TC,[Ano,Ano1,Ano2],R), 
-                                                       R < 75000.
++contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: (
+                                                        find(IdAd,IdAda,TC,[2018,2019,2020],R), 
+                                                        X is R - V,
+                                                        X < 75000).
 
 soma([],0).
-soma([contrato(_,_,_,_,_,_,V,_,_,_,_,_)|Tail],R) :- soma(Tail,Res), Res is R + V. 
+soma([H|T],R) :- soma(T,Result), R is Result + H. 
 
-find(IdAd,IdAda,TC,Anos,R) :- findall((_,IdAd,IdAda,TC,_,_,_,_,_,_,_,_), 
-                              (contrato(_,IdAd,IdAda,TC,_,_,_,_,_,_,_,X), 
-                              pertence(X,Anos), S)),
+find(IdAd,IdAda,TC,Anos,R) :- solucoes((V), 
+                              (contrato(_,IdAd,IdAda,TC,_,_,V,_,_,_,_,X),
+                              pertence(X,Anos)), S),
                               soma(S,R).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
