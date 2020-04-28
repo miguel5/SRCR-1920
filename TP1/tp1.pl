@@ -33,6 +33,12 @@
     nao(excecao(adjudicataria(IdAda,Nome,Nif,Morada))).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+adjudicante(1,'ze do pipo',123456789,'Vila').
+adjudicataria(1,'quim barreiros',987654321,'Vila').
+%evolucao(contrato(1,1,1,'contrato de aquisicao','ajuste direto','descricao',150,300,'Amares',26,6,2020)).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicante/2
 
 +adjudicante(IdAd,N,NIF,M) :: ( solucoes( (IdAd, NIF),
@@ -110,6 +116,22 @@
                                                                    contrato(_,_,_,_,'ajuste direto',_,_,P,_,_,_,_),
                                                                    S ),
                                                          P =< 365 ). 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Invariante Estrutural: 
+
++contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: Ano1 is Ano - 1, 
+                                                       Ano2 is Ano - 2, 
+                                                       find(IdAd,IdAda,TC,[Ano,Ano1,Ano2],R), 
+                                                       R < 75000.
+
+soma([],0).
+soma([contrato(_,_,_,_,_,_,V,_,_,_,_,_)|Tail],R) :- soma(Tail,Res), Res is R + V. 
+
+find(IdAd,IdAda,TC,Anos,R) :- findall((_,IdAd,IdAda,TC,_,_,_,_,_,_,_,_), 
+                              (contrato(_,IdAd,IdAda,TC,_,_,_,_,_,_,_,X), 
+                              pertence(X,Anos), S)),
+                              soma(S,R).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Extensao do meta-predicado nao: Questao -> {V,F}
