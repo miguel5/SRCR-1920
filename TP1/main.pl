@@ -87,12 +87,11 @@ adjudicataria(9, 'CONSTANTINO FERNANDES OLIVEIRA & FILHOS, S.A.', 336086015, 'Fe
 adjudicataria(10, 'SORGAL - SOCIEDADE DE OLEOS E RACOES, S.A.', 586086015, 'Freixo de Espada a Cinta').
 
 
-contrato(1,1,1,'tipoContrato','tipoProcedimento','descricao',50000,300,'Amares',26,6,2020).
-contrato(2,1,1,'tipoContrato','tipoProcedimento','descricao',10000,300,'Amares',26,6,2018).
-contrato(3,1,1,'tipoContrato','tipoProcedimento','descricao',10000,300,'Amares',26,6,2019).
-contrato(4,1,1,'tipoContrato','tipoProcedimento','descricao',4000000,300,'Amares',26,6,2016).
-contrato(5,1,1,'tipoContrato','tipoProcedimento','descricao',5000,300,'Amares',26,6,2018).
-%evolucao(contrato(1,1,1,'tipoContrato','ajuste direto','descricao',20,365,'Amares',26,6,2020)).
+contrato(1,1,1,'contrato de aquisicao','ajuste direto','descricao',50000.1,300,'Amares',26,6,2020).
+contrato(2,1,1,'contrato de aquisicao','ajuste direto','descricao',10000.45,300,'Amares',26,6,2018).
+contrato(3,1,1,'contrato de aquisicao','ajuste direto','descricao',10000.57,300,'Amares',26,6,2019).
+contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,300,'Amares',26,6,2016).
+%evolucao(contrato(5,1,1,'contrato de aquisicao','ajuste direto','descricao',250.356,365,'Amares',26,6,2020)).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -230,6 +229,12 @@ id(R) :- solucoes( IdC,
          maior(S,R1),
          R is R1 + 1.
 
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Invariante Estrutural: não permitir a inserção de um valor inválido.
+
++contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: valor_valido(V).
+
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -237,8 +242,100 @@ id(R) :- solucoes( IdC,
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Invariante Referencial: não existir mais do que uma ocorrência do identificador na relação cancelado/1
+
++cancelado(IdC) :: ( solucoes( IdC,
+                               cancelado(IdC),
+                               S ),
+                     comprimento(S,N),
+                     N == 1 ).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Invariante Referencial: não existir mais do que uma ocorrência do identificador na relação arquivado/1
+
++arquivado(IdC) :: ( solucoes( IdC,
+                               arquivado(IdC),
+                               S ),
+                     comprimento(S,N),
+                     N == 1 ).
 
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Predicado que cancela um contrato se este ainda estiver dentro do prazo.
+
+cancelar(IdC) :- ( solucoes( IdC,
+                             contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),
+                             S ),
+                   comprimento(S,N),
+                   N == 1 ), 
+                 findall(P,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R1),         % get R1 = [prazo]
+                 head(R1,R2),                                                              % get R2 = prazo
+                 findall(Dia,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R3),       % get R3 = [dia]
+                 head(R3,R4),                                                              % get R4 = dia
+                 findall(Mes,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R5),       % get R5 = [mes]
+                 head(R5,R6),                                                              % get R6 = mes
+                 findall(Ano,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R7),       % get R7 = [ano]
+                 head(R7,R8),                                                              % get R8 = ano
+                 cmp_datas(R4,R6,R8,R2),                                                   % validar prazo
+                 evolucao(cancelado(IdC)).                                                 % inserir conhecimento
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Predicado que arquiva um contrato se este já estiver expirado o seu prazo.
+
+arquivar(IdC) :- ( solucoes( IdC,
+                             contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),
+                             S ),
+                   comprimento(S,N),
+                   N == 1 ), 
+                 findall(P,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R1),         % get R1 = [prazo]
+                 head(R1,R2),                                                              % get R2 = prazo
+                 findall(Dia,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R3),       % get R3 = [dia]
+                 head(R3,R4),                                                              % get R4 = dia
+                 findall(Mes,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R5),       % get R5 = [mes]
+                 head(R5,R6),                                                              % get R6 = mes
+                 findall(Ano,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),R7),       % get R7 = [ano]
+                 head(R7,R8),                                                              % get R8 = ano
+                 nao(cmp_datas(R4,R6,R8,R2)),                                              % validar prazo
+                 evolucao(arquivado(IdC)).                                                 % inserir conhecimento
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Predicado que devolve o estado de um contrato.
+
+estado(IdC) :- findall(IdC,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),S),
+               length(S,N),
+               N == 0,
+               write('contrato inexistente').
+
+estado(IdC) :- findall(IdC,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),S1),
+               length(S1,N1),
+               N1 == 1,
+               findall(IdC,cancelado(IdC),S2),
+               length(S2,N2),
+               N2 == 1,
+               write('contrato cancelado').
+
+estado(IdC) :- findall(IdC,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),S1),
+               length(S1,N1),
+               N1 == 1,
+               findall(IdC,arquivado(IdC),S2),
+               length(S2,N2),
+               N2 == 1,
+               write('contrato arquivado').
+
+estado(IdC) :- findall(IdC,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),S1),
+               length(S1,N1),
+               N1 == 1,
+               findall(IdC,cancelado(IdC),S2),
+               length(S2,N2),
+               N2 == 0,
+               findall(IdC,arquivado(IdC),S3),
+               length(S3,N3),
+               N3 == 0,
+               write('contrato em vigor').
 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
