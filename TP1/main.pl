@@ -50,8 +50,7 @@
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-%Inserção de Adjudicantes
+% Inserção de Adjudicantes
 
 adjudicante(1, 'Eduardo Ferreira', 700048781, 'Cernache do Bonjardim').
 adjudicante(2, 'Orlando Amorim', 154705563, 'Alhandra').
@@ -74,6 +73,7 @@ adjudicante(18, 'Frederica Martins', 513266124, 'Paredes').
 adjudicante(19, 'Bruna Soares', 811236624, 'Castanheira de Pera').
 adjudicante(20, 'Alexandre Neves', 452175840, 'Figueira de Castelo Rodrigo').
 
+% Inserção de Adjudicatarias
 
 adjudicataria(1, 'COFINA MEDIA, S.A.', 288881114, 'Ferrel').
 adjudicataria(2, 'LISBOAGAS GDL - SOCIEDADE DISTRIBUIDORA DE GAS NATURAL DE LISBOA, S.A.', 416173057, 'Baiao').
@@ -86,6 +86,7 @@ adjudicataria(8, 'ARROWECS PORTUGAL, SOCIEDADE UNIPESSOAL, LDA', 455735168, 'Car
 adjudicataria(9, 'CONSTANTINO FERNANDES OLIVEIRA & FILHOS, S.A.', 336086015, 'Ferreira do Zezere').
 adjudicataria(10, 'SORGAL - SOCIEDADE DE OLEOS E RACOES, S.A.', 586086015, 'Freixo de Espada a Cinta').
 
+% Inserção de Contratos
 
 contrato(1,1,1,'contrato de aquisicao','ajuste direto','descricao',50000.1,300,'Amares',26,6,2020).
 contrato(2,1,1,'contrato de aquisicao','ajuste direto','descricao',10000.45,300,'Amares',26,6,2018).
@@ -99,7 +100,6 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicante/4
 
 +adjudicante(IdAd,N,NIF,M) :: ( solucoes( (IdAd, NIF),
@@ -110,6 +110,7 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
                                     C == 1).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Referencial: não existir mais do que uma ocorrência do NIF nas relações adjudicante/4 e adjudicataria/4
 
 +adjudicante(IdAd,N,NIF,M) :: ( solucoes( NIF,
@@ -118,32 +119,51 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
                               comprimento(S,C),
                               C == 0 ).
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Invariante Referencial: não permitir a involucao de um adjudicante caso este já tenha realizado um contrato
+
+-adjudicante(IdAd,N,NIF,M) :: ( solucoes( IdAd,
+                                          contrato(_,IdAd,_,_,_,_,_,_,_,_,_,_),
+                                          S ),
+                                comprimento(S,C),
+                                C == 0 ).
+
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 %|                                                                          Adjudicataria                                                                   |%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicataria/4
 
 +adjudicataria(IdAda,N,NIF,M) :: ( solucoes( (IdAda,NIF),
                                             (adjudicataria(IdAda,_,_,_),
                                             adjudicataria(_,_,NIF,_)),
                                             S ),
-                                    comprimento(S,C),
-                                    C == 1).
+                                   comprimento(S,C),
+                                   C == 1).
 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Referencial: não existir mais do que uma ocorrência do NIF nas relações adjudicante/4 e adjudicataria/4
 
-+adjudicataria(IdAd,N,NIF,M) :: ( solucoes( NIF,
-                                            adjudicante(_,_,NIF,_),
++adjudicataria(IdAda,N,NIF,M) :: ( solucoes( NIF,
+                                             adjudicante(_,_,NIF,_),
+                                             S ),
+                                   comprimento(S,C),
+                                   C == 0 ).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Invariante Referencial: não permitir a involucao de um adjudicante caso este já tenha realizado um contrato
+
+-adjudicataria(IdAda,N,NIF,M) :: ( solucoes( IdAda,
+                                            contrato(_,_,IdAda,_,_,_,_,_,_,_,_,_),
                                             S ),
-                                comprimento(S,C),
-                                C == 0 ).
+                                  comprimento(S,C),
+                                  C == 0 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -151,7 +171,6 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência do identificador de contrato na relação contrato/12
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
@@ -160,8 +179,8 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
                                                          comprimento(S,N),
                                                          N == 1 ).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Referencial: existir uma ocorrência do identificador do adjudicante/4
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdAd,
@@ -170,8 +189,8 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
                                                          comprimento(S,N),
                                                          N == 1 ).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Referencial: existir uma ocorrência do identificador do adjudicataria/4
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdAda,
@@ -180,32 +199,32 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
                                                          comprimento(S,N),
                                                          N == 1 ).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Estrutural: não permitir a inserção de tipos de procedimento inválidos
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: pertence( TP,['ajuste direto', 'consulta previa', 'concurso publico'] ).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Estrutural: não permitir a inserção de contratos com tipo de procedimento ajuste direto e valor =< a 5000€
 
 +contrato(IdC,IdAd,IdAda,TC,'ajuste direto',D,V,P,L,Dia,Mes,Ano) :: (V =< 5000, V >= 0).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Estrutural: não permitir a inserção de contratos com tipo de procedimento ajuste direto e tipos de contrato inválidos
 
 +contrato(IdC,IdAd,IdAda,TC,'ajuste direto',D,V,P,L,Dia,Mes,Ano) :: pertence( TC,['contrato de aquisicao', 'locacao de bens moveis', 'aquisicao de servicos'] ).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Estrutural: não permitir a inserção de contratos com tipo de procedimento ajuste direto e prazo de vigência superior a 1 ano
 
 +contrato(IdC,IdAd,IdAda,TC,'ajuste direto',D,V,P,L,Dia,Mes,Ano) :: (P =< 365, P > 0). 
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Estrutural: Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço do mesmo tipo ou 
 % idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores, sempre que o preço contratual 
 % acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros
@@ -230,11 +249,10 @@ id(R) :- solucoes( IdC,
          R is R1 + 1.
 
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Estrutural: não permitir a inserção de um valor inválido.
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: valor_valido(V).
-
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -242,7 +260,6 @@ id(R) :- solucoes( IdC,
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência do identificador na relação cancelado/1
 
 +cancelado(IdC) :: ( solucoes( IdC,
@@ -252,6 +269,7 @@ id(R) :- solucoes( IdC,
                      N == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Invariante Referencial: não existir mais do que uma ocorrência do identificador na relação arquivado/1
 
 +arquivado(IdC) :: ( solucoes( IdC,
@@ -260,8 +278,8 @@ id(R) :- solucoes( IdC,
                      comprimento(S,N),
                      N == 1 ).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Predicado que cancela um contrato se este ainda estiver dentro do prazo.
 
 cancelar(IdC) :- ( solucoes( IdC,
@@ -299,7 +317,6 @@ arquivar(IdC) :- ( solucoes( IdC,
                  head(R7,R8),                                                              % get R8 = ano
                  nao(cmp_datas(R4,R6,R8,R2)),                                              % validar prazo
                  evolucao(arquivado(IdC)).                                                 % inserir conhecimento
-
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -344,14 +361,13 @@ estado(IdC) :- findall(IdC,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),S1
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Extensao do meta-predicado nao: Questao -> {V,F}
 
 nao( Questao ) :- Questao, !, fail.
 nao( Questao ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Extensao do meta-predicado demo: Questao,Resposta -> {V,F}
 %                                          Resposta = { verdadeiro,falso,desconhecido }
 
@@ -364,6 +380,7 @@ demo( Questao,desconhecido ) :-
     nao( -Questao ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Extensao do predicado que permite a evolucao do conhecimento
 
 evolucao( Termo ) :-
@@ -382,6 +399,7 @@ teste( [R|LR] ) :-
     teste( LR ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Extensão do predicado que permite a involucao do conhecimento
 
 involucao( Termo ) :-
