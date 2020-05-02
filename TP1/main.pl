@@ -74,7 +74,17 @@ adjudicante(18, 'Frederica Martins', 513266124, 'Paredes').
 adjudicante(19, 'Bruna Soares', 811236624, 'Castanheira de Pera').
 adjudicante(20, 'Alexandre Neves', 452175840, 'Figueira de Castelo Rodrigo').
 
-adjudicataria(1,'quim barreiros',987654321,'Vila').
+
+adjudicataria(1, 'COFINA MEDIA, S.A.', 288881114, 'Ferrel').
+adjudicataria(2, 'LISBOAGAS GDL - SOCIEDADE DISTRIBUIDORA DE GAS NATURAL DE LISBOA, S.A.', 416173057, 'Baiao').
+adjudicataria(3, 'AGRUPALTO - AGRUPAMENTO DE PRODUTORES AGROPECUARIOS, S.A.', 133136500, 'Carvalho de Espingarda as Costas').
+adjudicataria(4, 'SOAUTO - COMERCIO DE AUTOMOVEIS, S.A.', 661010031, 'Mogadouro').
+adjudicataria(5, 'AVIPRONTO - PRODUTOS ALIMENTARES, S.A.', 101642875, 'Castanheira de Pera').
+adjudicataria(6, 'DATABOX - INFORMATICA, S.A.', 130618810, 'Coruche').
+adjudicataria(7, 'ARCOL, S.A.', 707857376, 'Crato').
+adjudicataria(8, 'ARROWECS PORTUGAL, SOCIEDADE UNIPESSOAL, LDA', 455735168, 'Carrazeda de Ansiaes').
+adjudicataria(9, 'CONSTANTINO FERNANDES OLIVEIRA & FILHOS, S.A.', 336086015, 'Ferreira do Zezere').
+adjudicataria(10, 'SORGAL - SOCIEDADE DE OLEOS E RACOES, S.A.', 586086015, 'Freixo de Espada a Cinta').
 
 
 contrato(1,1,1,'tipoContrato','tipoProcedimento','descricao',50000,300,'Amares',26,6,2020).
