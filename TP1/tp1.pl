@@ -17,8 +17,7 @@
 :- dynamic adjudicante/4.
 :- dynamic adjudicataria/4.
 :- dynamic id/1.
-:- dynamic cancelado/12.
-:- dynamic cmpdatas/7.
+:- dynamic cancelado/1.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Aplicação do PMF
@@ -35,9 +34,9 @@
     nao(adjudicataria(IdAda,Nome,Nif,Morada)),
     nao(excecao(adjudicataria(IdAda,Nome,Nif,Morada))).
 
--cancelado(IdC,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Dia,Mes,Ano) :- 
-    nao(cancelado(IdC,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Dia,Mes,Ano)), 
-    nao(excecao(cancelado(IdC,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Dia,Mes,Ano))).
+-cancelado(IdC) :- 
+    nao(cancelado(IdC)), 
+    nao(excecao(cancelado(IdC))).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -82,11 +81,11 @@ contrato(5,1,1,'tipoContrato','tipoProcedimento','descricao',4999,300,'Amares',2
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência do identificador na relação cancelado/12
 
-+cancelado(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
-                                                                    cancelado(IdC,_,_,_,_,_,_,_,_,_,_,_),
-                                                                    S ),
-                                                          comprimento(S,N),
-                                                          N == 1 ).
++cancelado(IdC) :: ( solucoes( IdC,
+                               cancelado(IdC),
+                               S ),
+                     comprimento(S,N),
+                     N == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: existir uma ocorrência do identificador do adjudicante/4
@@ -148,7 +147,7 @@ cancelar(IdC) :- ( solucoes( IdC,
 %                now(T1),
 %                timestamp(P,T2),
 %                T1 < T2,
-                 evolucao(cancelado(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)).   
+                 evolucao(cancelado(IdC)).   
 
 timestamp(0,R) :- now(R).
 timestamp(Dias,R) :- timestamp(0,T), R1 is Dias * 86400, R is R1 + T.
