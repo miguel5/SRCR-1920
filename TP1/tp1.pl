@@ -17,6 +17,8 @@
 :- dynamic adjudicante/4.
 :- dynamic adjudicataria/4.
 :- dynamic id/1.
+:- dynamic cancelado/12.
+:- dynamic cmpdatas/7.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Aplicação do PMF
@@ -32,6 +34,10 @@
 -adjudicataria(IdAda,Nome,Nif,Morada) :- 
     nao(adjudicataria(IdAda,Nome,Nif,Morada)),
     nao(excecao(adjudicataria(IdAda,Nome,Nif,Morada))).
+
+-cancelado(IdC,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Dia,Mes,Ano) :- 
+    nao(cancelado(IdC,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Dia,Mes,Ano)), 
+    nao(excecao(cancelado(IdC,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Dia,Mes,Ano))).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -72,6 +78,15 @@ contrato(5,1,1,'tipoContrato','tipoProcedimento','descricao',4999,300,'Amares',2
                                                                    S ),
                                                          comprimento(S,N),
                                                          N == 1 ).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Invariante Referencial: não existir mais do que uma ocorrência do identificador na relação cancelado/12
+
++cancelado(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
+                                                                    cancelado(IdC,_,_,_,_,_,_,_,_,_,_,_),
+                                                                    S ),
+                                                          comprimento(S,N),
+                                                          N == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: existir uma ocorrência do identificador do adjudicante/4
@@ -121,6 +136,22 @@ contrato(5,1,1,'tipoContrato','tipoProcedimento','descricao',4999,300,'Amares',2
                                                          find(IdAd,IdAda,TC,[Ano,Ano1,Ano2],R), 
                                                          X is R - V,
                                                          X < 75000 ).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Cancelar contratos se este ainda estiver dentro do prazo.
+
+cancelar(IdC) :- ( solucoes( IdC,
+                             contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),
+                             S ),
+                   comprimento(S,N),
+                   N == 1 ),
+%                now(T1),
+%                timestamp(P,T2),
+%                T1 < T2,
+                 evolucao(cancelado(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)).   
+
+timestamp(0,R) :- now(R).
+timestamp(Dias,R) :- timestamp(0,T), R1 is Dias * 86400, R is R1 + T.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Extensao do meta-predicado nao: Questao -> {V,F}
