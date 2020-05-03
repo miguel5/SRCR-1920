@@ -135,7 +135,7 @@
 
 % Invariante Referencial: não permitir a inserção de uma adjudicataria com nif inválido
 
-+adjudicataria(IdAd,N,NIF,M) :: ( integer(NIF), NIF > 0, numToList(X,R), comprimento(R,9) ).
++adjudicataria(IdAd,N,NIF,M) :: ( integer(NIF), NIF > 0, numToList(NIF,R), comprimento(R,9) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

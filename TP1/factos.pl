@@ -243,7 +243,7 @@ excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda,Nome,Nif,x0
 nulo(x013).
 
 +adjudicataria(IdAda,Nome,Nif,Morada) :: ( solucoes( Morada,
-                                                     (adjudicataria(17, 'Pesca Nova', 848294023, x013),
+                                                     (adjudicataria(17, 'Pesca Nova', 848294023, Morada),
                                                      nao(nulo(Morada))),
                                                      S ), 
                                            comprimento(S,0) ).
