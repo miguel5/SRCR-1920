@@ -163,3 +163,41 @@ excecao(contrato(52, 15, 2, 'contrato de trabalho', 'concurso publico', 'contrat
 % Sabe-se que o valor do contrato com idContrato 101 está compreendido entre os 1000€ e os 2500€
 
 excecao(contrato(53, 1 , 10,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', V, 716, 'Bairrada', 23, 3, 2013)) :- V > 1000, V < 2500.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
+%|                                                                      CONHECIMENTO INTERDITO                                                              |%
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+
+adjudicante(25, x008, 938274920, 'Moreira').
+excecao(adjudicante(IdAd, Nome, Nif, Morada)) :- adjudicante(IdAd, x008, Nif, Morada).
+nulo(x008).
+
+adjudicante(26, 'Deolinda Matavento', x009, 'Maia').
+excecao(adjudicante(IdAd, Nome, Nif, Morada)) :- adjudicante(IdAd, Nome, x009, Morada).
+nulo(x009).
+
+adjudicante(27, 'Gertrudes Ganza', 927492846, x010).
+excecao(adjudicante(IdAd, Nome, Nif, Morada)) :- adjudicante(IdAd, Nome, Nif, x010).
+nulo(x010).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+adjudicataria(15, x011, 472947264, 'Caxinas').
+excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda, x011, Nif, Morada).
+nulo(x011).
+
+adjudicataria(16, 'Jardim Melhor', x012, 'Rates').
+excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda, Nome, x012, Morada).
+nulo(x012).
+
+adjudicataria(17, 'Pesca Nova', 848294023, x013).
+excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda,Nome,Nif,x013).
+nulo(x013).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+contrato(54, 14, 6, 'compra de carro', 'concurso publico', x014, 1339.54, 356, 'Alvalade', 27, 7, 2015).
+excecao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)) :- contrato(IdC,IdAd,IdAda,TC,TP,x014,V,P,L,Dia,Mes,Ano).
+nulo(x014).
