@@ -17,7 +17,6 @@
 :- dynamic contrato/12.
 :- dynamic adjudicante/4.
 :- dynamic adjudicataria/4.
-:- dynamic id/1.
 :- dynamic cancelado/1.
 :- dynamic arquivado/1.
 
@@ -246,19 +245,6 @@ contrato(4,1,1,'contrato de aquisicao','ajuste direto','descricao',4000000.98,30
                                                          X is R - V,
                                                          X < 75000 ).
 
-
-find(IdAd,IdAda,TC,Anos,R) :- solucoes((V), 
-                              (contrato(_,IdAd,IdAda,TC,_,_,V,_,_,_,_,X),
-                              pertence(X,Anos)), S),
-                              soma(S,R).
-
-
-idContrato(R) :- solucoes( IdC,
-                           contrato(IdC,_,_,_,_,_,_,_,_,_,_,_),
-                           S ),
-                 maior(S,R1),
-                 R is R1 + 1.
-
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– 
 
 % Invariante Estrutural: não permitir a inserção de um valor inválido.
@@ -288,7 +274,6 @@ idContrato(R) :- solucoes( IdC,
                                S ),
                      comprimento(S,N),
                      N == 1 ).
-
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -346,26 +331,3 @@ remocao( Termo ) :-
     retract( Termo ).
 remocao( Termo ) :-
     assert( Termo ),!,fail.
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
-% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
-%|                                                                            API                                                                           |%    
-% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
-
-% Adicionar um contrato
-
-add_contrato(IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :- id(IdC),                                                        % get próximo id
-                                                      evolucao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)).   % inserir conhecimento
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-% Remover um adjudicante
-
-remove_ad(IdAd) :- involucao(adjudicante(IdAd,_,_,_)).
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-% Remover uma adjudicataria
-
-remove_ada(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).

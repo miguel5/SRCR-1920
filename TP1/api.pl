@@ -6,15 +6,16 @@
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Adicionar um adjudicante
 
+add_adjudicante(N,NIF,M) :- id_adjudicante(IdAd),                  % get próximo id
+                            evolucao(adjudicante(IdAd,N,NIF,M)).   % inserir conhecimento
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Remover um adjudicante
 
-remove_ad(IdAd) :- involucao(adjudicante(IdAd,_,_,_)).
-
+remove_adjudicante(IdAd) :- involucao(adjudicante(IdAd,_,_,_)).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -22,11 +23,16 @@ remove_ad(IdAd) :- involucao(adjudicante(IdAd,_,_,_)).
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
+% Adicionar uma adjudicataria
+
+add_adjudicataria(N,NIF,M) :- id_adjudicataria(IdAda),                  % get próximo id
+                              evolucao(adjudicataria(IdAda,N,NIF,M)).   % inserir conhecimento
+
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Remover uma adjudicataria
 
-remove_ada(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).
-
+remove_adjudicataria(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -34,7 +40,6 @@ remove_ada(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Adicionar um contrato
 
 add_contrato(IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :- idContrato(IdC),                                                        % get próximo id
@@ -46,7 +51,6 @@ add_contrato(IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :- idContrato(IdC),          
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Predicado que cancela um contrato se este ainda estiver dentro do prazo.
 
 cancelar(IdC) :- ( solucoes( IdC,
@@ -66,6 +70,7 @@ cancelar(IdC) :- ( solucoes( IdC,
                  evolucao(cancelado(IdC)).                                                 % inserir conhecimento
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Predicado que arquiva um contrato se este já estiver expirado o seu prazo.
 
 arquivar(IdC) :- ( solucoes( IdC,
@@ -86,6 +91,7 @@ arquivar(IdC) :- ( solucoes( IdC,
 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Predicado que devolve o estado de um contrato.
 
 estado(IdC) :- findall(IdC,contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),S),
