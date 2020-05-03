@@ -50,7 +50,7 @@
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
 % Inserção de Adjudicantes
-
+% Extensao do predicado adjudicante: IdAd, N, NIF, M -> {V,F}
 adjudicante(1, 'Eduardo Ferreira', 700048781, 'Cernache do Bonjardim').
 adjudicante(2, 'Orlando Amorim', 154705563, 'Alhandra').
 adjudicante(3, 'Valentina Henriques', 220621364, 'Boticas').
@@ -74,7 +74,7 @@ adjudicante(20, 'Alexandre Neves', 452175840, 'Figueira de Castelo Rodrigo').
 
 
 % Inserção de Adjudicatarias
-
+% Extensao do predicado adjudicataria: IdAda, N, NIF, M -> {V,F}
 adjudicataria(1, 'COFINA MEDIA, S.A.', 288881114, 'Ferrel').
 adjudicataria(2, 'LISBOAGAS GDL - SOCIEDADE DISTRIBUIDORA DE GAS NATURAL DE LISBOA, S.A.', 416173057, 'Baiao').
 adjudicataria(3, 'AGRUPALTO - AGRUPAMENTO DE PRODUTORES AGROPECUARIOS, S.A.', 133136500, 'Carvalho de Espingarda as Costas').
@@ -88,7 +88,7 @@ adjudicataria(10, 'SORGAL - SOCIEDADE DE OLEOS E RACOES, S.A.', 586086015, 'Frei
 
 
 % Inserção de Contratos
-
+% Extensao do predicado contrato: IdC, IdAd, IdAda, TC, TP, D, V, P, L, Dia, Mes, Ano -> {V,F}
 contrato(1, 3, 4, 'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', 2761.13, 246, 'Marinha das Ondas', 11, 1, 2018).
 contrato(2, 6, 11, 'locacao de bens moveis', 'ajuste direto', 'contrato de locacao de um ou mais bens moveis', 390.51, 218, 'Canical', 26, 2, 2011).
 contrato(3, 4, 9, 'contrato de arrendamento', 'concurso publico', 'contrato de arrendamento de imovel', 91017.60, 466, 'Aveiras de Cima', 13, 8, 2013).
