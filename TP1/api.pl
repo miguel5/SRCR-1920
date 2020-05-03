@@ -9,6 +9,7 @@
 % Adicionar um adjudicante
 
 add_adjudicante(N,NIF,M) :- id_adjudicante(IdAd),                  % get próximo id
+                            write(IdAd),
                             evolucao(adjudicante(IdAd,N,NIF,M)).   % inserir conhecimento
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -43,6 +44,7 @@ get_valor_ano_adjudicante(IdAd,Ano,R) :- findall(V, contrato(IdC,IdAd,IdAda,TC,T
 % Adicionar uma adjudicataria
 
 add_adjudicataria(N,NIF,M) :- id_adjudicataria(IdAda),                  % get próximo id
+                              write(IdAda),
                               evolucao(adjudicataria(IdAda,N,NIF,M)).   % inserir conhecimento
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,6 +79,7 @@ get_valor_ano_adjudicataria(IdAda,Ano,R) :- findall(V, contrato(IdC,IdAd,IdAda,T
 % Adicionar um contrato
 
 add_contrato(IdAd,IdAda,TC,TP,D,V,P,L) :- id_contrato(IdC),                                               % get próximo id
+                                          write(IdC),
                                           now(T),                                                         % get timestamp atual
                                           datime(T,Datime),                                               % converter o timestamp
                                           get_dia(Datime,Dia),                                            % get dia atual
