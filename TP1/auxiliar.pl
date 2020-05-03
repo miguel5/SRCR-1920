@@ -106,3 +106,21 @@ find(IdAd,IdAda,TC,Anos,R) :- solucoes((V),
                               (contrato(_,IdAd,IdAda,TC,_,_,V,_,_,_,_,X),
                               pertence(X,Anos)), S),
                               soma(S,R).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Extensão do predicado get_dia - devolve o dia de um datime/6 : Datime, Resultado -> {V,F}
+
+get_dia(datime(Ano,Mes,Dia,Horas,Min,Sec),Dia).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Extensão do predicado get_mes - devolve o mes de um datime/6 : Datime, Resultado -> {V,F}
+
+get_mes(datime(Ano,Mes,Dia,Horas,Min,Sec),Mes). 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Extensão do predicado get_ano - devolve o ano de um datime/6 : Datime, Resultado -> {V,F}
+
+get_ano(datime(Ano,Mes,Dia,Horas,Min,Sec),Ano). 

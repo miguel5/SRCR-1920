@@ -17,6 +17,23 @@ add_adjudicante(N,NIF,M) :- id_adjudicante(IdAd),                  % get próxim
 
 remove_adjudicante(IdAd) :- involucao(adjudicante(IdAd,_,_,_)).
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Obter ids dos contratos de um adjudicante
+
+get_contratos_adjudicante(IdAd,R) :- findall(IdC, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), R). 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Obter o valor total dos contratos de um adjudicante criados num dado ano
+
+get_valor_ano_adjudicante(IdAd,Ano,R) :- findall(V, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), S),
+                                         soma(S,R1),
+                                         R2 is R1 - integer(R1),
+                                         R3 is R2 * 100,               
+                                         R4 is integer(R3) / 100,
+                                         R is integer(R1) + R4.
+
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 %|                                                                          Adjudicataria                                                                   |%
@@ -34,6 +51,23 @@ add_adjudicataria(N,NIF,M) :- id_adjudicataria(IdAda),                  % get pr
 
 remove_adjudicataria(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Obter o valor total dos contratos de uma adjudicataria criados num dado ano
+
+get_valor_ano_adjudicataria(IdAda,Ano,R) :- findall(V, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), S),
+                                            soma(S,R1),
+                                            R2 is R1 - integer(R1),
+                                            R3 is R2 * 100,               
+                                            R4 is integer(R3) / 100,
+                                            R is integer(R1) + R4.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Obter ids dos contratos de um adjudicante
+
+get_contratos_adjudicataria(IdAda,R) :- findall(IdC, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), R). 
+
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 %|                                                                            Contrato                                                                      |%
@@ -42,8 +76,13 @@ remove_adjudicataria(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).
 
 % Adicionar um contrato
 
-add_contrato(IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :- idContrato(IdC),                                                        % get próximo id
-                                                      evolucao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)).   % inserir conhecimento
+add_contrato(IdAd,IdAda,TC,TP,D,V,P,L) :- id_contrato(IdC),                                               % get próximo id
+                                          now(T),                                                         % get timestamp atual
+                                          datime(T,Datime),                                               % converter o timestamp
+                                          get_dia(Datime,Dia),                                            % get dia atual
+                                          get_mes(Datime,Mes),                                            % get mes atual
+                                          get_ano(Datime,Ano),                                            % get ano atual
+                                          evolucao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)).   % inserir conhecimento
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
