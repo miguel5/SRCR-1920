@@ -88,18 +88,6 @@
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante Referencial: não permitir a adição de conhecimento interdito
-
-+adjudicante(IdAd,Nome,Nif,Morada) :: ( solucoes( IdAd,
-                                                  (adjudicante(IdAd,Nome,Nif,Morada),
-                                                   nao(nulo(Nome)), 
-                                                   nao(nulo(Nif)),
-                                                   nao(nulo(Morada))),
-                                                  L ),
-                                        comprimento(L,0) ).
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 % Invariante Estrutural: não remover adjudicantes que não estejam na base de conhecimento
 
 -adjudicante(IdAd,Nome,Nif,Morada) :: ( solucoes( IdAd,
@@ -148,17 +136,6 @@
 % Invariante Referencial: não permitir a inserção de uma adjudicataria com nif inválido
 
 +adjudicataria(IdAd,N,NIF,M) :: ( integer(NIF), NIF > 0, numToList(X,R), comprimento(R,9) ).
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-% Invariante Referencial: não permitir a adição de conhecimento interdito
-
-+adjudicataria(IdAda,Nome,Nif,Morada) :: (solucoes( IdAd,
-                                                   (adjudicataria(IdAda,Nome,Nif,Morada),
-                                                    nao(nulo(Nome)), 
-                                                    nao(nulo(Nif)),
-                                                    nao(nulo(Morada))),L),
-                                          comprimento(L,0)).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -245,25 +222,6 @@
 % Invariante Estrutural: não permitir a inserção de um valor inválido
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: valor_valido(V).
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-% Invariante Referencial: não permitir a adição de conhecimento interdito
-
-+contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
-                                                                   (contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),
-                                                                   nao(nulo(IdAd)), 
-                                                                   nao(nulo(IdAda)),
-                                                                   nao(nulo(TC)),
-                                                                   nao(nulo(TP)),
-                                                                   nao(nulo(D)),
-                                                                   nao(nulo(V)),
-                                                                   nao(nulo(P)),
-                                                                   nao(nulo(L)),
-                                                                   nao(nulo(Dias)),
-                                                                   nao(nulo(Mes)),
-                                                                   nao(nulo(Ano))),L),
-                                                         comprimento(L,0) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %

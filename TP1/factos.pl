@@ -190,13 +190,31 @@ adjudicante(25, x008, 938274920, 'Moreira').
 excecao(adjudicante(IdAd, Nome, Nif, Morada)) :- adjudicante(IdAd, x008, Nif, Morada).
 nulo(x008).
 
++adjudicante(IdAd,Nome,Nif,Morada) :: ( solucoes( Nome,
+                                                  (adjudicante(25, Nome, 938274920, 'Moreira'),
+                                                  nao(nulo(Nome))),
+                                                  S ),
+                                        comprimento(S,0) ).
+
 adjudicante(26, 'Deolinda Matavento', x009, 'Maia').
 excecao(adjudicante(IdAd, Nome, Nif, Morada)) :- adjudicante(IdAd, Nome, x009, Morada).
 nulo(x009).
 
++adjudicante(IdAd,Nome,Nif,Morada) :: ( solucoes( Nif,
+                                                  (adjudicante(26, 'Deolinda Matavento', Nif, 'Maia'),
+                                                  nao(nulo(Nif))),
+                                                  S ),
+                                        comprimento(S,0) ).
+
 adjudicante(27, 'Gertrudes Ganza', 927492846, x010).
 excecao(adjudicante(IdAd, Nome, Nif, Morada)) :- adjudicante(IdAd, Nome, Nif, x010).
 nulo(x010).
+
++adjudicante(IdAd,Nome,Nif,Morada) :: ( solucoes( Morada,
+                                                  (adjudicante(27, 'Gertrudes Ganza', 927492846, Morada),
+                                                  nao(nulo(Morada))),
+                                                  S ),
+                                        comprimento(S,0) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -204,16 +222,42 @@ adjudicataria(15, x011, 472947264, 'Caxinas').
 excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda, x011, Nif, Morada).
 nulo(x011).
 
++adjudicataria(IdAda,Nome,Nif,Morada) :: ( solucoes( Nome,
+                                                     (adjudicataria(15, Nome, 472947264, 'Caxinas'),
+                                                     nao(nulo(Nome))),
+                                                     S ), 
+                                           comprimento(S,0) ).
+
 adjudicataria(16, 'Jardim Melhor', x012, 'Rates').
 excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda, Nome, x012, Morada).
 nulo(x012).
 
++adjudicataria(IdAda,Nome,Nif,Morada) :: ( solucoes( Nif,
+                                                     (adjudicataria(16, 'Jardim Melhor', Nif, 'Rates'),
+                                                     nao(nulo(Nif))),
+                                                     S ), 
+                                           comprimento(S,0) ).
+
 adjudicataria(17, 'Pesca Nova', 848294023, x013).
 excecao(adjudicataria(IdAda,Nome,Nif,Morada)) :- adjudicataria(IdAda,Nome,Nif,x013).
 nulo(x013).
+
++adjudicataria(IdAda,Nome,Nif,Morada) :: ( solucoes( Morada,
+                                                     (adjudicataria(17, 'Pesca Nova', 848294023, x013),
+                                                     nao(nulo(Morada))),
+                                                     S ), 
+                                           comprimento(S,0) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 contrato(54, 14, 6, 'compra de carro', 'concurso publico', x014, 1339.54, 356, 'Alvalade', 27, 7, 2015).
 excecao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano)) :- contrato(IdC,IdAd,IdAda,TC,TP,x014,V,P,L,Dia,Mes,Ano).
 nulo(x014).
+
++contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( D,
+                                                                   (contrato(54, 14, 6, 'compra de carro', 'concurso publico', D, 1339.54, 356, 'Alvalade', 27, 7, 2015),
+                                                                   nao(nulo(D))),
+                                                                   S ),
+                                                         comprimento(S,0) ).
+
+                                        
