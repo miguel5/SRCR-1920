@@ -53,6 +53,12 @@ remove_adjudicataria(IdAda) :- involucao(adjudicataria(IdAda,_,_,_)).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+% Obter ids dos contratos de um adjudicante
+
+get_contratos_adjudicataria(IdAda,R) :- findall(IdC, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), R). 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 % Obter o valor total dos contratos de uma adjudicataria criados num dado ano
 
 get_valor_ano_adjudicataria(IdAda,Ano,R) :- findall(V, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), S),
@@ -61,12 +67,6 @@ get_valor_ano_adjudicataria(IdAda,Ano,R) :- findall(V, contrato(IdC,IdAd,IdAda,T
                                             R3 is R2 * 100,               
                                             R4 is integer(R3) / 100,
                                             R is integer(R1) + R4.
-
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-% Obter ids dos contratos de um adjudicante
-
-get_contratos_adjudicataria(IdAda,R) :- findall(IdC, contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano), R). 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
@@ -127,7 +127,6 @@ arquivar(IdC) :- ( solucoes( IdC,
                  head(R7,R8),                                                              % get R8 = ano
                  nao(cmp_datas(R4,R6,R8,R2)),                                              % validar prazo
                  evolucao(arquivado(IdC)).                                                 % inserir conhecimento
-
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

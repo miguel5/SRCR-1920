@@ -45,7 +45,6 @@
     nao(arquivado(IdC)), 
     nao(excecao(arquivado(IdC))).
 
-
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 %|                                                                           Adjudicantes                                                                   |%
@@ -55,25 +54,25 @@
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicante/4
 
 +adjudicante(IdAd,N,NIF,M) :: ( solucoes( (IdAd, NIF),
-                                        (adjudicante(IdAd,_,_,_),
-                                        adjudicante(_,_,NIF,_)),
-                                        S ),
-                                    comprimento(S,C),
-                                    C == 1).
+                                          (adjudicante(IdAd,_,_,_),
+                                           adjudicante(_,_,NIF,_)),
+                                          S ),
+                                comprimento(S,C),
+                                C == 1).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 % Invariante Referencial: não existir mais do que uma ocorrência do NIF nas relações adjudicante/4 e adjudicataria/4
 
 +adjudicante(IdAd,N,NIF,M) :: ( solucoes( NIF,
-                                        adjudicataria(_,_,NIF,_),
-                                        S ),
-                              comprimento(S,C),
-                              C == 0 ).
+                                          adjudicataria(_,_,NIF,_),
+                                          S ),
+                                comprimento(S,C),
+                                C == 0 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante Referencial: não permitir a involucao de um adjudicante caso este já tenha realizado um contrato
+% Invariante Referencial: não permitir a involução de um adjudicante caso este já tenha realizado um contrato
 
 -adjudicante(IdAd,N,NIF,M) :: ( solucoes( IdAd,
                                           contrato(_,IdAd,_,_,_,_,_,_,_,_,_,_),
@@ -89,13 +88,15 @@
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante nao permitir a adicao de conhecimento interdito
+% Invariante Referencial: não permitir a adição de conhecimento interdito
 
-+adjudicante(IdAd,Nome,Nif,Morada) :: (solucoes( IdAd,
-                                                (adjudicante(IdAd,Nome,Nif,Morada),
-                                                    nao(nulo(Nome)), 
-                                                    nao(nulo(Nif)),
-                                                    nao(nulo(Morada))),L),comprimento(L,0)).
++adjudicante(IdAd,Nome,Nif,Morada) :: ( solucoes( IdAd,
+                                                  (adjudicante(IdAd,Nome,Nif,Morada),
+                                                   nao(nulo(Nome)), 
+                                                   nao(nulo(Nif)),
+                                                   nao(nulo(Morada))),
+                                                  L ),
+                                        comprimento(L,0) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -113,15 +114,14 @@
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 % Invariante Referencial: não existir mais do que uma ocorrência da mesma evidência na relação adjudicataria/4
 
 +adjudicataria(IdAda,N,NIF,M) :: ( solucoes( (IdAda,NIF),
-                                            (adjudicataria(IdAda,_,_,_),
-                                            adjudicataria(_,_,NIF,_)),
-                                            S ),
+                                             (adjudicataria(IdAda,_,_,_),
+                                             adjudicataria(_,_,NIF,_)),
+                                             S ),
                                    comprimento(S,C),
-                                   C == 1).
+                                   C == 1 ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -135,7 +135,7 @@
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante Referencial: não permitir a involucao de um adjudicante caso este já tenha realizado um contrato
+% Invariante Referencial: não permitir a involução de um adjudicante caso este já tenha realizado um contrato
 
 -adjudicataria(IdAda,N,NIF,M) :: ( solucoes( IdAda,
                                             contrato(_,_,IdAda,_,_,_,_,_,_,_,_,_),
@@ -151,7 +151,7 @@
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante nao permitir a adicao de conhecimento interdito
+% Invariante Referencial: não permitir a adição de conhecimento interdito
 
 +adjudicataria(IdAda,Nome,Nif,Morada) :: (solucoes( IdAd,
                                                    (adjudicataria(IdAda,Nome,Nif,Morada),
@@ -242,13 +242,13 @@
 
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– 
 
-% Invariante Estrutural: não permitir a inserção de um valor inválido.
+% Invariante Estrutural: não permitir a inserção de um valor inválido
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: valor_valido(V).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante nao permitir a adicao de conhecimento interdito
+% Invariante Referencial: não permitir a adição de conhecimento interdito
 
 +contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano) :: ( solucoes( IdC,
                                                                    (contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,L,Dia,Mes,Ano),

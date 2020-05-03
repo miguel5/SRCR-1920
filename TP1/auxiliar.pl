@@ -23,14 +23,14 @@ pertence( X,[Y|L] ) :- X \= Y, pertence( X,L ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Extensão do predicado soma - predicado que dada uma lista, soma todos os seus elementos : Lista, Resultado -> {V,F}
+% Extensão do predicado soma - devolve a soma de todos os elementos de uma determinada lista : Lista, Resultado -> {V,F}
 
 soma([],0).
 soma([H|T],R) :- soma(T,Result), R is Result + H. 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Extensão do predicado maior - soma todos os elementos que pertencem a uma determinada lista : Lista, Resultado -> {V,F}
+% Extensão do predicado maior - devolve o maior elemento de uma determinada lista : Lista, Resultado -> {V,F}
 
 maior([], R, R).
 maior([X|Xs], WK, R):- X >  WK, maior(Xs, X, R).
@@ -49,21 +49,21 @@ cmp_datas(Day,Month,Year,P) :- datime(T1,datime(Year,Month,Day,24,00,00)),   % t
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Extensão do predicado head - devolve a cabeça da lista, não vazia, que recebe como parâmetro : Lista, Elemento -> {V,F}
+% Extensão do predicado head - devolve a cabeça de uma determinada lista não vazia : Lista, Elemento -> {V,F}
 
 head([],_) :- !,fail.
 head([H|_], H).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Extensão do predicado timestamp - devolve o timestamp do dia atual somado com o numero de dias recebido como parâmetro : Número de Dias, Resultado -> {V,F}
+% Extensão do predicado timestamp - devolve o timestamp do dia atual somado com um determinado numero de dias : Número de Dias, Resultado -> {V,F}
 
 timestamp(0,R) :- now(R).
 timestamp(Dias,R) :- timestamp(0,T), R1 is Dias * 86400, R is R1 + T.
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Extensão do predicado timestamp - devolve o timestamp do dia atual somado com o número de dias recebido como parâmetro : Número de Dias, Resultado -> {V,F}
+% Extensão do predicado timestamp - valida um valor de um contrato : Valor -> {V,F}
 
 valor_valido(N) :- (integer(N)) -> N >= 0 ; N >= 0, Rest is N*(10^2), Rest - integer(Rest) =:= 0.
 

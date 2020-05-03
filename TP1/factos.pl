@@ -5,7 +5,9 @@
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 
 % Inserção de Adjudicantes
+
 % Extensao do predicado adjudicante: IdAd, N, NIF, M -> {V,F}
+
 adjudicante(1, 'Eduardo Ferreira', 700048781, 'Cernache do Bonjardim').
 adjudicante(2, 'Orlando Amorim', 154705563, 'Alhandra').
 adjudicante(3, 'Valentina Henriques', 220621364, 'Boticas').
@@ -29,7 +31,9 @@ adjudicante(20, 'Alexandre Neves', 452175840, 'Figueira de Castelo Rodrigo').
 
 
 % Inserção de Adjudicatarias
+
 % Extensao do predicado adjudicataria: IdAda, N, NIF, M -> {V,F}
+
 adjudicataria(1, 'COFINA MEDIA, S.A.', 288881114, 'Ferrel').
 adjudicataria(2, 'LISBOAGAS GDL - SOCIEDADE DISTRIBUIDORA DE GAS NATURAL DE LISBOA, S.A.', 416173057, 'Baiao').
 adjudicataria(3, 'AGRUPALTO - AGRUPAMENTO DE PRODUTORES AGROPECUARIOS, S.A.', 133136500, 'Carvalho de Espingarda as Costas').
@@ -43,7 +47,9 @@ adjudicataria(10, 'SORGAL - SOCIEDADE DE OLEOS E RACOES, S.A.', 586086015, 'Frei
 
 
 % Inserção de Contratos
+
 % Extensao do predicado contrato: IdC, IdAd, IdAda, TC, TP, D, V, P, L, Dia, Mes, Ano -> {V,F}
+
 contrato(1,  4 , 3,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', 2761.13, 246, 'Marinha das Ondas', 11, 1, 2018).
 contrato(2,  11, 6,'locacao de bens moveis', 'ajuste direto', 'contrato de locacao de um ou mais bens moveis', 390.51, 218, 'Canical', 26, 2, 2011).
 contrato(3,  9 , 4,'contrato de arrendamento', 'concurso publico', 'contrato de arrendamento de imovel', 91017.60, 466, 'Aveiras de Cima', 13, 8, 2013).
@@ -138,6 +144,16 @@ excecao(adjudicataria(IdAda,_,NIF,Morada)) :- adjudicataria(IdAda,x006,NIF,Morad
 % Não existe na base de conhecimento o local do contrato com id 51, apesar de este existir
 
 contrato(51, 5, 1,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', 335.54, 74, x007, 24, 8, 2017).
+
+
+excecao(adjudicante(IdAd,Nome,Nif,_)) :- adjudicante(IdAd,Nome,Nif,x001).
+excecao(adjudicante(IdAd,Nome,_,Morada)) :- adjudicante(IdAd,Nome,x002,Morada).
+excecao(adjudicante(IdAd,_,NIF,Morada)) :- adjudicante(IdAd,x003,NIF,Morada).
+
+excecao(adjudicataria(IdAda,Nome,Nif,_)) :- adjudicataria(IdAda,Nome,Nif,x004).
+excecao(adjudicataria(IdAda,Nome,_,Morada)) :- adjudicataria(IdAda,Nome,x005,Morada).
+excecao(adjudicataria(IdAda,_,NIF,Morada)) :- adjudicataria(IdAda,x006,NIF,Morada).
+
 excecao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,_,Dia,Mes,Ano)) :- contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,x007,Dia,Mes,Ano).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
