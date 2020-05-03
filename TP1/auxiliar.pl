@@ -124,3 +124,10 @@ get_mes(datime(Ano,Mes,Dia,Horas,Min,Sec),Mes).
 % Extensão do predicado get_ano - devolve o ano de um datime/6 : Datime, Resultado -> {V,F}
 
 get_ano(datime(Ano,Mes,Dia,Horas,Min,Sec),Ano). 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Extensão do predicado numToList - converte um número numa lista de numeros inteiros : Numero, Resultado -> {V,F}
+
+numToList(NUM,[LIST|[]]):- NUM < 10, LIST is NUM, !.
+numToList(NUM,LIST):- P is NUM // 10, numToList(P,LIST1), END is (NUM mod 10), append(LIST1,[END] ,LIST).

@@ -18,6 +18,7 @@
 :- dynamic adjudicataria/4.
 :- dynamic cancelado/1.
 :- dynamic arquivado/1.
+:- dynamic excecao/1.
 :- include(auxiliar).
 :- include(factos).
 
@@ -80,6 +81,12 @@
                                 comprimento(S,C),
                                 C == 0 ).
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% Invariante Referencial: não permitir a inserção de um adjudicante com nif inválido
+
++adjudicante(IdAd,N,NIF,M) :: ( integer(NIF), NIF > 0, numToList(NIF,R), comprimento(R,9) ).
+
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
 %|                                                                          Adjudicataria                                                                   |%
@@ -95,7 +102,6 @@
                                             S ),
                                    comprimento(S,C),
                                    C == 1).
-
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -119,13 +125,9 @@
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-% Invariante Referencial: não permitir a involucao de um adjudicante caso este já tenha realizado um contrato
+% Invariante Referencial: não permitir a inserção de uma adjudicataria com nif inválido
 
--adjudicataria(IdAda,N,NIF,M) :: ( solucoes( IdAda,
-                                            contrato(_,_,IdAda,_,_,_,_,_,_,_,_,_),
-                                            S ),
-                                  comprimento(S,C),
-                                  C == 0 ).
++adjudicataria(IdAd,N,NIF,M) :: ( integer(NIF), NIF > 0, numToList(X,R), comprimento(R,9) ).
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
 % –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %

@@ -94,3 +94,72 @@ contrato(47, 14, 9,'contrato de habitacao', 'concurso publico', 'contrato de arr
 contrato(48, 2 , 5,'locacao de bens moveis', 'ajuste direto', 'contrato de locacao de um ou mais bens moveis', 2857.45, 156, 'Lousada', 22, 2, 2018).
 contrato(49, 3 , 9,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', 2533.91, 46, 'Ancas', 8, 1, 2017).
 contrato(50, 19, 3,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', 3640.41, 22, 'Boticas', 29, 2, 2011).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
+%|                                                                         CONHECIMENTO INCERTO                                                             |%
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+
+% Não existe na base de conhecimento a morada da Teodora, apesar de esta existir 
+
+adjudicante(21,'Teodora Fernandes',293498947,x001).
+excecao(adjudicante(IdAd,Nome,Nif,_)) :- adjudicante(IdAd,Nome,Nif,x001).
+
+% Não existe na base de conhecimento o NIF do Alexandre, apesar de este existir
+
+adjudicante(22,'Alexandre Santos',x002,'Vila do Conde').
+excecao(adjudicante(IdAd,Nome,_,Morada)) :- adjudicante(IdAd,Nome,x002,Morada).
+
+% Não existe na base de conhecimento o nome do adjudicante com id 23, apesar de este existir
+
+adjudicante(23,x003,825402749,'Fajoses').
+excecao(adjudicante(IdAd,_,NIF,Morada)) :- adjudicante(IdAd,x003,NIF,Morada).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+
+% Não existe na base de conhecimento a morada do Pica Pau, apesar de esta existir 
+
+adjudicataria(11,'Pica Pau',826502849,x004).
+excecao(adjudicataria(IdAda,Nome,Nif,_)) :- adjudicataria(IdAda,Nome,Nif,x004).
+
+% Não existe na base de conhecimento o NIF do Paraquedas, apesar de este existir
+
+adjudicataria(12,'Paraquedas',x005,'Vila do Conde').
+excecao(adjudicataria(IdAda,Nome,_,Morada)) :- adjudicataria(IdAda,Nome,x005,Morada).
+
+% Não existe na base de conhecimento o nome da adjudicataria com id 13, apesar de este existir
+
+adjudicataria(13,x006,923857274,'Fajoses').
+excecao(adjudicataria(IdAda,_,NIF,Morada)) :- adjudicataria(IdAda,x006,NIF,Morada).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+
+% Não existe na base de conhecimento o local do contrato com id 51, apesar de este existir
+
+contrato(51, 5, 1,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', 335.54, 74, x007, 24, 8, 2017).
+excecao(contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,_,Dia,Mes,Ano)) :- contrato(IdC,IdAd,IdAda,TC,TP,D,V,P,x007,Dia,Mes,Ano).
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
+%|                                                                        CONHECIMENTO IMPRECISO                                                            |%
+% –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– %
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -%
+
+% A Morada do Manuel é Braga ou Póvoa de Lanhoso
+
+excecao(adjudicante(24,'Manuel Aragao',285612438,'Braga')).
+excecao(adjudicante(24,'Manuel Aragao',285612438,'Povoa de Lanhoso')).
+
+% O Nif da Adjudicatária Maquinaria Pesada Unipessoal é 765231987 ou 865231987.
+
+excecao(adjudicataria(14,'Maquinaria Pesada Unipessoal',765231987,'Montalegre')).
+excecao(adjudicataria(14,'Maquinaria Pesada Unipessoal',865231987,'Montalegre')).
+
+% Entre o dia 1 e 17, do mes de Dezembro de 2019, foi da assinado o contrato de trabalho com id 100.
+
+excecao(contrato(52, 15, 2, 'contrato de trabalho', 'concurso publico', 'contrato de trabalho a termo certo', 345.1, 10, 'Tavira', D, 12, 2019)) :- D >= 1, D =< 17.
+
+% Sabe-se que o valor do contrato com idContrato 101 está compreendido entre os 1000€ e os 2500€
+
+excecao(contrato(53, 1 , 10,'contrato de aquisicao', 'ajuste direto', 'contrato de aquisicao de um bem', V, 716, 'Bairrada', 23, 3, 2013)) :- V > 1000, V < 2500.
